@@ -2,7 +2,7 @@
 import { noop } from './utils.js';
 
 /**
- * requestAnimationFrame that can be curried
+ * requestAnimationFrame Closure
  *
  * ```js
  * const addClass = rAFC((el, i, arr) => el.classList.add('array-element', 'array-element--' + i, 'array-element--' + i + '-of-' + arr.length));
@@ -43,9 +43,9 @@ export const fixRelOpener = () =>
 	requestAnimationFrame(() =>
 		document
 			.querySelectorAll('a[target=_blank]:not([rel*=noopener])')
-			.forEach((e) => {
-				e.setAttribute('rel', e.getAttribute('rel') + ' noopener');
-			}),
+			.forEach((e) =>
+				e.setAttribute('rel', e.getAttribute('rel') + ' noopener'),
+			),
 	);
 
 export const rIC =

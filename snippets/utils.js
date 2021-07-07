@@ -6,3 +6,24 @@ export const pipe =
 		fns.reduce((v, f) => f(v), x);
 
 export const noop = () => {};
+
+/**
+ * Returns the true type of a variable
+ *
+ * e.g. `{}` returns `Object`, `[]` returns `Array`, and `function(){}` returns `Function`
+ * @param {any} obj
+ * @returns {string}
+ */
+export const type = (obj) => Object.prototype.toString.call(obj).slice(8, -1);
+
+/**
+ * @param {()=>void} fn
+ */
+export const createWorker = (fn) =>
+	new Worker(
+		URL.createObjectURL(
+			new Blob(['self.onmessage=' + fn.toString() + ';'], {
+				type: 'text/javascript',
+			}),
+		),
+	);
