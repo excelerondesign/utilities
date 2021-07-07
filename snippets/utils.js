@@ -4,3 +4,5 @@ export const pipe =
 	(/** @type {((arg: any) => any)[]} */ ...fns) =>
 	(/** @type {unknown} */ x) =>
 		fns.reduce((v, f) => f(v), x);
+
+export const noop = () => {};

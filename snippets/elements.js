@@ -1,4 +1,5 @@
 // @ts-check
+import { noop } from './utils.js';
 
 /**
  * requestAnimationFrame that can be curried
@@ -89,4 +90,48 @@ export const extendEvent = (type, originalEvent = null, detail = {}) => {
 		composed,
 		detail,
 	});
+};
+
+/**
+ * importing the bottom three will allow you to do a requestAnimationTimeout, but
+ * you can also add your own cancelAnimationFrameVariable or cancelAnimationTimeout if
+ * you need something custom
+ */
+/**
+ * cancelAnimationTimeout "rip cord"
+ *
+ * Allows you to cancel an animation from anywhere using this variable;
+ */
+export let cancelAnimationFrameVariable = noop;
+/**
+ * @param {(raf: number) => void} requestAnimationTimeoutKey
+ * @param {(raf: number) => void} cancelAnimationFrameVariable
+ */
+export const cancelAnimationTimeout = (
+	requestAnimationTimeoutKey,
+	cancelAnimationFrameVariable,
+) => (cancelAnimationFrameVariable = requestAnimationTimeoutKey);
+
+/**
+ * requestAnimationFrame with the benefits of setTimeout
+ * @param {(args: unknown) => undefined} fn
+ * @param {number} delay
+ * @param {(arg: (raf:number) => void) => void} cancelAnimationTimeout
+ */
+export const requestAnimationTimeout = (fn, delay, cancelAnimationTimeout) => {
+	const start = performance.now();
+	const loop = () => {
+		const delta = performance.now() - start;
+
+		if (delta >= delay) {
+			fn();
+			cancelAnimationTimeout(noop);
+			return;
+		}
+		const raf = requestAnimationFrame(loop);
+		cancelAnimationTimeout(() => cancelAnimationFrame(raf));
+	};
+
+	const raf = requestAnimationFrame(loop);
+	cancelAnimationTimeout(() => cancelAnimationFrame(raf));
 };
