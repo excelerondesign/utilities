@@ -1,4 +1,21 @@
 // @ts-check
+
+/**
+ * requestAnimationFrame that can be curried
+ *
+ * ```js
+ * const addClass = rAFC((el, i, arr) => el.classList.add('array-element', 'array-element--' + i, 'array-element--' + i + '-of-' + arr.length));
+ *
+ * document.querySelectorAll('.element').forEach(addClass);
+ * ```
+ * @param {(args: unknown[]) => void} fn
+ * @returns {(args: unknown[]) => number}
+ */
+export const rAFC =
+	(fn) =>
+	(...args) =>
+		requestAnimationFrame(() => fn(...args));
+
 /**
  * @param {HTMLElement} element
  * @param {string} [prefix]
@@ -22,7 +39,7 @@ export const getOptionsFromDataset = (element, prefix) => (
 );
 
 export const fixRelOpener = () =>
-	requestAnimationFrame((e) =>
+	requestAnimationFrame(() =>
 		document
 			.querySelectorAll('a[target=_blank]:not([rel*=noopener])')
 			.forEach((e) => {
