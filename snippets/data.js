@@ -38,6 +38,55 @@ const handler = {
  */
 export const Enum = (enumObject) => new Proxy(enumObject, handler);
 
+
+/**
+ * #### A storage solution aimed at replacing jQuerys data function.
+ * 
+ * Implementation Note: Elements are stored in a [WeakMap](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap).
+ * 
+ * *This makes sure the data is garbage collected when the node is removed.*
+ */
+export const __Data = {
+	_storage: new WeakMap(),
+	/**
+	 * @param {HTMLElement} element 
+	 * @param {unknown} key 
+	 * @param {object} obj 
+	 */
+	put: function (element, key, obj) {
+		if (!this._storage.has(element)) {
+			this._storage.set(element, new Map());
+		}
+		this._storage.get(element).set(key, obj);
+	},
+	/**
+	 * @param {HTMLElement} element 
+	 * @param {unknown} key 
+	 */
+	get: function (element, key) {
+		return this._storage.get(element).get(key);
+	},
+	/**
+	 * @param {HTMLElement} element 
+	 * @param {unknown} key 
+	 */
+	has: function (element, key) {
+		return this._storage.has(element) && this._storage.get(element).has(key);
+	},
+	/**
+	 * @param {HTMLElement} element 
+	 * @param {unknown} key 
+	 */
+	remove: function (element, key) {
+		var ret = this._storage.get(element).delete(key);
+		if (this._storage.get(element).size === 0) {
+			this._storage.delete(element);
+		}
+		return ret;
+	}
+}
+
+
 /**
  * a non CSPRNG random number generator
  * @param {number} a - the length of the returned id
@@ -54,20 +103,18 @@ export const randid = (a, b = 9) =>
 /**
  * Takes a string of invalid or non-compliant JSON and makes it spec-compliant
  *
+ * @param {string} text - Malformed or non-compliant JSON-like string
+ * 
  * ```json
- * {
- *   tokenName: 'something',
- * }
+ * { tokenName: 'something', }
  * ```
- * Becomes:
+ * 
+ * *Becomes*
+ * 
  * ```json
- * {
- *   "tokenName": "something"
- * }
+ * { "tokenName": "something" }
  * ```
  *
- * @param {string} text
- * @returns {string}
  */
 export function JSONRelaxer(text) {
 	/**
