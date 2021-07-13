@@ -1,0 +1,79 @@
+multi-dropdown {
+	display: block;
+	font-size: 1rem;
+	color: black;
+}
+
+multi-dropdown:focus {
+	/**
+     * Insert your focus styles here
+     */
+}
+
+multi-dropdown:focus-within:not(:focus) {
+	/**
+     * For when the focus is on the checkboxes inside of the dropdown
+     * but the multi-dropdown needs to maintain the focus styles
+     */
+}
+
+multi-dropdown > .select-title {
+	display: inline-block;
+	width: 100%;
+	/* slightly altered .form-control styles from Bootstrap 4 */
+	min-height: calc(1.5em + 0.75rem + 2px); /* taken from Bootstrap 4 */
+	background: white;
+	padding: 10px 15px;
+	line-height: inherit;
+}
+
+multi-dropdown > .select-title::after {
+	display: inline-block;
+	content: '>';
+	margin-left: 2ch;
+	font-size: 0.9em;
+	transform: rotate(90deg) scale(1, 2);
+}
+
+multi-dropdown > .select-title:hover {
+	opacity: 0.9;
+}
+
+multi-dropdown > .select-options {
+	margin-top: 5px;
+	margin-top: 1ch; /* the width of the 0 (zero) character */
+	display: none;
+	position: absolute;
+	z-index: -1;
+	pointer-events: none;
+	background-color: #fff;
+}
+
+multi-dropdown.open > .select-options {
+	display: block;
+	pointer-events: auto;
+}
+
+/** Opinionated styles */
+/** Opinionated styles are used by adding on the .multi-dropdown class to the multi-dropdown element */
+.multi-dropdown .option {
+	display: grid;
+	grid-template-columns: min-content 1fr;
+	place-content: center;
+}
+
+.multi-dropdown .option label {
+	display: inline-block;
+	padding: 10px 30px;
+	padding-left: 10px;
+}
+
+.multi-dropdown .option input {
+	margin: 10px 0;
+	margin-left: 15px;
+	width: auto;
+}
+
+.multi-dropdown .option:hover {
+	background-color: #eaeaec;
+}
