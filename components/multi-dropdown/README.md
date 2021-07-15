@@ -29,8 +29,8 @@ Add the custom element and necessary HTML elements:
 ```
 
 <details>
-    <summary><i>Notes for setup</i></summary>
-    When setting up your HTML, what is shown should be considered the default HTML. If you need more complex or are constrained by different style needs, you only need the classes `.select-options` and `.select-title`.
+  <summary><i>Notes for setup</i></summary>
+  When setting up your HTML, what is shown should be considered the default HTML. If you need more complex or are constrained by different style needs, you only need the classes `.select-options` and `.select-title`.
 </details>
 
 ## Styling
