@@ -17,14 +17,14 @@ Add the custom element and necessary HTML elements:
 
 ```html
 <multi-dropdown>
-	<div class="select-title">Dropdown Title</div>
-	<div class="select-options">
-		<div class="option">
-			<input type="checkbox" name="input" id="input1" value="value1" />
-			<label for="input1">Value 1</label>
-		</div>
-		...
-	</div>
+  <div class="select-title">Dropdown Title</div>
+  <div class="select-options">
+    <div class="option">
+      <input type="checkbox" name="input" id="input1" value="value1" />
+      <label for="input1">Value 1</label>
+    </div>
+    ...
+  </div>
 </multi-dropdown>
 ```
 
