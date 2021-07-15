@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Multi-Dropdown Custom Element</title>
+		<link rel="stylesheet" href="../../styles/reset/index.css" />
+		<link rel="stylesheet" href="main.css" />
+	</head>
+	<body class="body-padding" v-scope>
+		<main id="main" @mounted="mounted">
+			<section id="examples">
+				<fieldset>
+					<legend>Multi-Dropdown Simple Example</legend>
+					<div>
+						<multi-dropdown class="multi-dropdown">
+							<button class="select-title">
+								Click Me To Open Dropdown
+							</button>
+							<ul class="select-options">
+								<li class="option">
+									<input type="checkbox" id="input1" />
+									<label for="input1">Checkbox 1</label>
+								</li>
+								<li class="option">
+									<input type="checkbox" id="input2" />
+									<label for="input2">Checkbox 2</label>
+								</li>
+								<li class="option">
+									<input type="checkbox" id="input3" />
+									<label for="input3">Checkbox 3</label>
+								</li>
+								<li class="option">
+									<input type="checkbox" id="input4" />
+									<label for="input4">Checkbox 4</label>
+								</li>
+							</ul>
+						</multi-dropdown>
+					</div>
+				</fieldset>
+			</section>
+			<section v-html="content"></section>
+		</main>
+		<!-- page content -->
+		<script type="module" src="index.js"></script>
+		<script type="module">
+			import { createApp } from '../../node_modules/petite-vue/dist/petite-vue.es.js';
+			import marked from '../../node_modules/marked/lib/marked.esm.js';
+
+			const markdown = (async () => {
+				const markdownFetch = await fetch('./README.md');
+				const markdownText = await markdownFetch.text();
+				return markdownText;
+			})();
+
+			createApp({
+				markdown,
+				fetchMarkdown() {
+					return new Promise((res, rej) => {
+						const markdown = async () => {
+							const markdownFetch = await fetch('./README.md');
+							const markdownText = await markdownFetch.text();
+							console.log(typeof markdownText);
+							return markdownText;
+						};
+
+						res(markdown());
+					});
+				},
+				updateContent(newContent) {
+					this.content = newContent;
+				},
+				mounted() {
+					this.fetchMarkdown().then((text) => {
+						let content = marked(text);
+
+						this.updateContent(content);
+					});
+				},
+				set content(newContent) {
+					this._content = newContent;
+				},
+				get content() {
+					/*
+					const textNodes = Array.from(
+						this.markdown.childNodes,
+						(node) => {
+							console.log(node.nodeType);
+							if (node.nodeType !== 3) return false;
+							let content = node.textContent.replace(
+
+								'',
+							);
+							if (content === '') return false;
+							node.textContent = content;
+							return node;
+						},
+					).filter((node) => node);
+					console.log(textNodes);
+					*/ /*
+					this.fetchMarkdown();
+					const text = this.markdown;
+					const content = marked(text);
+
+					// const markdownHTML = marked(text);
+					/*;
+					const formattedTextNodes = textNodes.map((text) => {
+						let content = text.textContent;
+
+						return marked(content);
+					});
+					*/
+
+					return this._content || '';
+				},
+			}).mount('#main');
+		</script>
+	</body>
+</html>

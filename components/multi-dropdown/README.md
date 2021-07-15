@@ -1,5 +1,6 @@
-# Multi-Dropdown Web Component
-
+<header>
+ <h1>Multi-Dropdown Web Component</h1>
+</header>
 Used as a progressive enhancement.
 
 Take a group of checkbox inputs and turn them into a dropdown.
