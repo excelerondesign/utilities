@@ -12,7 +12,7 @@ const noop = () => {};
  * @param {(args: unknown[]) => void} fn
  * @returns {(args: unknown[]) => number}
  */
-export const rAFC =
+const rAFC =
 	(fn) =>
 	(...args) =>
 		requestAnimationFrame(() => fn(...args));
@@ -21,7 +21,7 @@ export const rAFC =
  * @param {HTMLElement} element
  * @param {string} [prefix]
  */
-export const getOptionsFromDataset = (element, prefix) => (
+const getOptionsFromDataset = (element, prefix) => (
 	(prefix = !!prefix ? prefix + '-' : ''),
 	Object.assign(
 		{},
@@ -39,7 +39,7 @@ export const getOptionsFromDataset = (element, prefix) => (
 	)
 );
 
-export const fixRelOpener = () =>
+const fixRelOpener = () =>
 	requestAnimationFrame(() =>
 		document
 			.querySelectorAll('a[target=_blank]:not([rel*=noopener])')
@@ -48,7 +48,7 @@ export const fixRelOpener = () =>
 			),
 	);
 
-export const rIC =
+const rIC =
 	// @ts-expect-error
 	self.requestIdleCallback ||
 	((
@@ -65,7 +65,7 @@ export const rIC =
 			1,
 		));
 
-export const cIC =
+const cIC =
 	//@ts-expect-error
 	self.cancelIdleCallback || ((/** @type {number} */ e) => clearTimeout(e));
 
@@ -76,7 +76,7 @@ export const cIC =
  * @param {object} detail?
  * @returns {CustomEvent}
  */
-export const extendEvent = (type, originalEvent = null, detail = {}) => {
+const extendEvent = (type, originalEvent = null, detail = {}) => {
 	if (originalEvent !== null) Object.assign(detail, { originalEvent });
 	const { bubbles, cancelable, composed } = originalEvent || {
 		bubbles: true,
@@ -102,12 +102,12 @@ export const extendEvent = (type, originalEvent = null, detail = {}) => {
  *
  * Allows you to cancel an animation from anywhere using this variable;
  */
-export let cancelAnimationFrameVariable = noop;
+let cancelAnimationFrameVariable = noop;
 /**
  * @param {(raf: number) => void} requestAnimationTimeoutKey
  * @param {(raf: number) => void} cancelAnimationFrameVariable
  */
-export const cancelAnimationTimeout = (
+const cancelAnimationTimeout = (
 	requestAnimationTimeoutKey,
 	cancelAnimationFrameVariable,
 ) => (cancelAnimationFrameVariable = requestAnimationTimeoutKey);
@@ -118,7 +118,7 @@ export const cancelAnimationTimeout = (
  * @param {number} delay
  * @param {(arg: (raf:number) => void) => void} cancelAnimationTimeout
  */
-export const requestAnimationTimeout = (fn, delay, cancelAnimationTimeout) => {
+const requestAnimationTimeout = (fn, delay, cancelAnimationTimeout) => {
 	const start = performance.now();
 	const loop = () => {
 		const delta = performance.now() - start;
@@ -134,4 +134,17 @@ export const requestAnimationTimeout = (fn, delay, cancelAnimationTimeout) => {
 
 	const raf = requestAnimationFrame(loop);
 	cancelAnimationTimeout(() => cancelAnimationFrame(raf));
+};
+
+export {
+	requestAnimationTimeout,
+	cancelAnimationFrameVariable,
+	cancelAnimationTimeout,
+	fixRelOpener,
+	rIC,
+	cIC,
+	rAFC,
+	extendEvent,
+	getOptionsFromDataset,
+	noop,
 };

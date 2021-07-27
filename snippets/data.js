@@ -47,7 +47,7 @@ const handler = {
  * @param {object} enumObject
  * @returns {ProxyHandler<object, handler>}
  */
-export const Enum = (enumObject) => new Proxy(enumObject, handler);
+const Enum = (enumObject) => new Proxy(enumObject, handler);
 
 /**
  * #### A storage solution aimed at replacing jQuerys data function.
@@ -56,7 +56,7 @@ export const Enum = (enumObject) => new Proxy(enumObject, handler);
  *
  * *This makes sure the data is garbage collected when the node is removed.*
  */
-export const __Data = {
+const __Data = {
 	_storage: new WeakMap(),
 	/**
 	 * @param {HTMLElement} element
@@ -104,7 +104,7 @@ export const __Data = {
  * @param {number} b? - the length of the Int8Array
  * @returns {string}
  */
-export const randid = (a, b = 9) =>
+const randid = (a, b = 9) =>
 	crypto
 		.getRandomValues(new Int8Array(b))
 		.map(Math.abs)
@@ -127,7 +127,7 @@ export const randid = (a, b = 9) =>
  * ```
  *
  */
-export function JSONRelaxer(text) {
+function JSONRelaxer(text) {
 	/**
 	 * @param {string} match
 	 * @param {string} p1
@@ -180,7 +180,7 @@ export function JSONRelaxer(text) {
  * @param {object} obj
  * @param {string} keys - formatted like so `key?.keyA?.keyB?.keyC
  */
-export const qd = (obj, keys) =>
+const qd = (obj, keys) =>
 	toString.call(obj) === '[object Object]'
 		? keys
 				.split('?.')
@@ -200,7 +200,7 @@ export const qd = (obj, keys) =>
  * @param {object} obj
  * @param {string} keys - formatted as `key?.keyA?.keyB?.keyC?.possibleFunction();
  */
-export function optChain(obj, keys) {
+function optChain(obj, keys) {
 	const callsAFunction = keys.indexOf('(') - 1;
 
 	const keysArr = keys.indexOf('?.') > -1 ? keys.split('?.') : [keys];
@@ -233,3 +233,5 @@ export function optChain(obj, keys) {
 		return undefined;
 	}
 }
+
+export { optChain, qd, Enum, JSONRelaxer, randid, __Data };
