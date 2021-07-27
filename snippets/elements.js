@@ -1,5 +1,5 @@
 // @ts-check
-import { noop } from './utils.js';
+const noop = () => {};
 
 /**
  * requestAnimationFrame Closure

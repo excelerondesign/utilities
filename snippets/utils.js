@@ -10,11 +10,12 @@ export const noop = () => {};
 /**
  * Returns the true type of a variable
  *
- * e.g. `{}` returns `Object`, `[]` returns `Array`, and `function(){}` returns `Function`
+ * e.g. `{}` returns `object`, `[]` returns `array`, and `function(){}` returns `function`
  * @param {any} obj
  * @returns {string}
  */
-export const type = (obj) => Object.prototype.toString.call(obj).slice(8, -1);
+export const type = (obj) =>
+	Object.prototype.toString.call(obj).slice(8, -1).toLowerCase();
 
 /**
  * @param {()=>void} fn
