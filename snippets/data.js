@@ -29,6 +29,17 @@ const handler = {
 		);
 		return false;
 	},
+	/**
+	 * Since our Enum is read only, this prevents deletion of any values
+	 * @param {object} x
+	 * @param {string} key
+	 */
+	deleteProperty(x, key) {
+		console.warn(
+			`Cannot delete properties on an Enum instance after it is defined - ${key}`,
+		);
+		return false;
+	},
 };
 
 /**
@@ -38,20 +49,19 @@ const handler = {
  */
 export const Enum = (enumObject) => new Proxy(enumObject, handler);
 
-
 /**
  * #### A storage solution aimed at replacing jQuerys data function.
- * 
+ *
  * Implementation Note: Elements are stored in a [WeakMap](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap).
- * 
+ *
  * *This makes sure the data is garbage collected when the node is removed.*
  */
 export const __Data = {
 	_storage: new WeakMap(),
 	/**
-	 * @param {HTMLElement} element 
-	 * @param {unknown} key 
-	 * @param {object} obj 
+	 * @param {HTMLElement} element
+	 * @param {unknown} key
+	 * @param {object} obj
 	 */
 	put: function (element, key, obj) {
 		if (!this._storage.has(element)) {
@@ -60,22 +70,24 @@ export const __Data = {
 		this._storage.get(element).set(key, obj);
 	},
 	/**
-	 * @param {HTMLElement} element 
-	 * @param {unknown} key 
+	 * @param {HTMLElement} element
+	 * @param {unknown} key
 	 */
 	get: function (element, key) {
 		return this._storage.get(element).get(key);
 	},
 	/**
-	 * @param {HTMLElement} element 
-	 * @param {unknown} key 
+	 * @param {HTMLElement} element
+	 * @param {unknown} key
 	 */
 	has: function (element, key) {
-		return this._storage.has(element) && this._storage.get(element).has(key);
+		return (
+			this._storage.has(element) && this._storage.get(element).has(key)
+		);
 	},
 	/**
-	 * @param {HTMLElement} element 
-	 * @param {unknown} key 
+	 * @param {HTMLElement} element
+	 * @param {unknown} key
 	 */
 	remove: function (element, key) {
 		var ret = this._storage.get(element).delete(key);
@@ -83,9 +95,8 @@ export const __Data = {
 			this._storage.delete(element);
 		}
 		return ret;
-	}
-}
-
+	},
+};
 
 /**
  * a non CSPRNG random number generator
@@ -104,13 +115,13 @@ export const randid = (a, b = 9) =>
  * Takes a string of invalid or non-compliant JSON and makes it spec-compliant
  *
  * @param {string} text - Malformed or non-compliant JSON-like string
- * 
+ *
  * ```json
  * { tokenName: 'something', }
  * ```
- * 
+ *
  * *Becomes*
- * 
+ *
  * ```json
  * { "tokenName": "something" }
  * ```
