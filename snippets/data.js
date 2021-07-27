@@ -205,15 +205,18 @@ export function optChain(obj, keys) {
 
 	const keysArr = keys.indexOf('?.') > -1 ? keys.split('?.') : [keys];
 
-	const isFunction = (obj) =>
-		!!(obj && obj.constructor && obj.call && obj.apply);
-
+	/**
+	 * @param {object} obj
+	 * @param {string} key
+	 */
 	const reducer = (obj, key) =>
-		null === obj || void 0 === obj
+		/* prettier-ignore */
+		(null === obj || undefined === obj)
 			? obj
 			: key in obj === false
-			? void 0
-			: callsAFunction && key.indexOf('(') === 0
+			? undefined
+			/* prettier-ignore */
+			: (callsAFunction && key.indexOf('(') === 0)
 			? obj()
 			: obj[key];
 
