@@ -174,3 +174,59 @@ export function JSONRelaxer(text) {
 
 	return relaxedJSON;
 }
+
+/**
+ *
+ * @param {object} obj
+ * @param {string} keys - formatted like so `key?.keyA?.keyB?.keyC
+ */
+export const qd = (obj, keys) =>
+	toString.call(obj) === '[object Object]'
+		? keys
+				.split('?.')
+				.reduce(
+					(currentObject, nextKey) =>
+						null === currentObject || undefined === currentObject
+							? currentObject
+							: nextKey in currentObject
+							? currentObject[nextKey]
+							: undefined,
+					obj,
+				)
+		: obj;
+
+/**
+ *
+ * @param {object} obj
+ * @param {string} keys - formatted as `key?.keyA?.keyB?.keyC?.possibleFunction();
+ */
+export function optChain(obj, keys) {
+	const callsAFunction = keys.indexOf('(') - 1;
+
+	const keysArr = keys.indexOf('?.') > -1 ? keys.split('?.') : [keys];
+
+	const isFunction = (obj) =>
+		!!(obj && obj.constructor && obj.call && obj.apply);
+
+	const reducer = (obj, key) =>
+		null === obj || void 0 === obj
+			? obj
+			: key in obj === false
+			? void 0
+			: callsAFunction && key.indexOf('(') === 0
+			? obj()
+			: obj[key];
+
+	try {
+		if (
+			obj === true ||
+			obj === false ||
+			toString.call(obj) === '[object Boolean]'
+		)
+			throw false;
+		Reflect.has(obj, Symbol());
+		return keysArr.reduce(reducer, obj);
+	} catch (err) {
+		return undefined;
+	}
+}
