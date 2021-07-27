@@ -1,5 +1,6 @@
-# Multi-Dropdown Web Component
-
+<header>
+ <h1>Multi-Dropdown Web Component</h1>
+</header>
 Used as a progressive enhancement.
 
 Take a group of checkbox inputs and turn them into a dropdown.
@@ -16,20 +17,20 @@ Add the custom element and necessary HTML elements:
 
 ```html
 <multi-dropdown>
-	<div class="select-title">Dropdown Title</div>
-	<div class="select-options">
-		<div class="option">
-			<input type="checkbox" name="input" id="input1" value="value1" />
-			<label for="input1">Value 1</label>
-		</div>
-		...
-	</div>
+  <div class="select-title">Dropdown Title</div>
+  <div class="select-options">
+    <div class="option">
+      <input type="checkbox" name="input" id="input1" value="value1" />
+      <label for="input1">Value 1</label>
+    </div>
+    ...
+  </div>
 </multi-dropdown>
 ```
 
 <details>
-    <summary><i>Notes for setup</i></summary>
-    When setting up your HTML, what is shown should be considered the default HTML. If you need more complex or are constrained by different style needs, you only need the classes `.select-options` and `.select-title`.
+  <summary><i>Notes for setup</i></summary>
+  When setting up your HTML, what is shown should be considered the default HTML. If you need more complex or are constrained by different style needs, you only need the classes `.select-options` and `.select-title`.
 </details>
 
 ## Styling
