@@ -7,11 +7,17 @@
 	"author": "frankie-tech <26461046+frankie-tech@users.noreply.github.com>",
 	"license": "MIT",
 	"scripts": {
-		"build": "microbundle snippets/index.js -f esm"
+		"prebuild": "rm -rf ./dist",
+		"build:dist": "microbundle snippets/index.js -f esm -o dist/index.js",
+		"build:data": "microbundle snippets/data.js -f esm -o dist/data.js",
+		"build:elements": "microbundle snippets/elements.js -f esm -o dist/elements.js",
+		"build:utils": "microbundle snippets/utils.js -f esm -o dist/utils.js",
+		"build": "npm-run-all build:*"
 	},
 	"devDependencies": {
 		"marked": "^2.1.3",
 		"microbundle": "^0.13.3",
+		"npm-run-all": "^4.1.5",
 		"petite-vue": "^0.2.3"
 	}
 }

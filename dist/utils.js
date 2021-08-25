@@ -1,0 +1,2 @@
+var t=function(){var t=arguments;return function(e){return[].slice.call(t).reduce(function(t,e){return e(t)},e)}},e=function(){},n=function(t){return Object.prototype.toString.call(t).slice(8,-1).toLowerCase()},r=function(t){return new Worker(URL.createObjectURL(new Blob(["self.onmessage="+t.toString()+";"],{type:"text/javascript"})))};export{r as createWorker,e as noop,t as pipe,n as type};
+//# sourceMappingURL=utils.js.map
