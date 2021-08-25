@@ -234,4 +234,35 @@ function optChain(obj, keys) {
 	}
 }
 
-export { optChain, qd, Enum, JSONRelaxer, randid, __Data };
+/**
+ * @typedef BytesObject
+ * @property {string} string
+ * @property {number} number
+ * @property {string|("B"|"KB"|"MB"|"GB"|"TB")} unit
+ */
+
+/**
+ *
+ * @param {number} bytes - The starting number of bytes
+ * @param {number} fixed - The fixed place to put the decimal to.
+ *
+ * @returns {BytesObject}
+ */
+function convertBytes(bytes = 0, fixed = 1) {
+	const i = Math.floor(Math.log(bytes) / Math.log(1024));
+	const units = ['B', 'KB', 'MB', 'GB', 'TB'];
+	if (bytes === 0 || i === 0) {
+		return {
+			string: `${bytes}B`,
+			number: bytes,
+			unit: units[0],
+		};
+	}
+	const num = (bytes / Math.pow(1024, i)).toFixed(fixed);
+	return {
+		string: `${num}${units[i]}`,
+		number: parseFloat(num),
+		unit: units[i],
+	};
+}
+export { optChain, qd, Enum, JSONRelaxer, randid, __Data, convertBytes };
