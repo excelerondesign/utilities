@@ -72,7 +72,7 @@ class MultiDropdown extends HTMLElement {
 			isOpen: this.isOpen,
 			values: Array.from(
 				this._options.querySelectorAll('[type="checkbox"]:checked'),
-				(el) => el.value,
+				el => el.value,
 			),
 		});
 	}
@@ -84,7 +84,7 @@ class MultiDropdown extends HTMLElement {
 			isOpen: this.isOpen,
 			values: Array.from(
 				this._options.querySelectorAll('[type="checkbox"]:checked'),
-				(el) => el.value,
+				el => el.value,
 			),
 		});
 	}
@@ -97,7 +97,7 @@ class MultiDropdown extends HTMLElement {
 			isOpen: this.isOpen,
 			values: Array.from(
 				this._options.querySelectorAll('[type="checkbox"]:checked'),
-				(el) => el.value,
+				el => el.value,
 			),
 		});
 	}
@@ -208,7 +208,7 @@ class MultiDropdown extends HTMLElement {
 			element: event.target,
 			values: Array.from(
 				this._options.querySelectorAll('[type="checkbox"]:checked'),
-				(el) => el.value,
+				el => el.value,
 			),
 		});
 	}

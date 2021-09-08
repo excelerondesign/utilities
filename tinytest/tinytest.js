@@ -42,7 +42,7 @@
 /**
  * @param {{ [key:string]: function }} tests
  */
-export const run = (tests) => {
+export const run = tests => {
 	let failures = 0;
 	for (let testName in tests) {
 		let testAction = tests[testName];
@@ -66,7 +66,7 @@ export const run = (tests) => {
 /**
  * @param {string} msg
  */
-export const fail = (msg) => {
+export const fail = msg => {
 	throw new Error('fail(): ' + msg);
 };
 
