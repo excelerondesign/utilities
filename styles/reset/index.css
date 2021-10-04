@@ -46,6 +46,17 @@ html:focus-within {
 	scroll-behavior: smooth;
 }
 
+/* Add scroll-margin-top for elements that have an id */
+[id] {
+	scroll-margin-block: 1em;
+}
+
+@supports not (scroll-margin-block: 1em) {
+	[id] {
+		scroll-margin-top: 1em;
+	}
+}
+
 /* Set core body defaults */
 body {
 	min-height: 100vh;
