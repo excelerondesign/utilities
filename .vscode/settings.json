@@ -1,0 +1,6 @@
+{
+    "search.exclude": {
+        "dists/*": true,
+        "node_modules/*":true
+    }
+}
