@@ -13,7 +13,7 @@ const noop = () => {};
  * @returns {(args: unknown[]) => number}
  */
 const rAFC =
-	(fn) =>
+	fn =>
 	(...args) =>
 		requestAnimationFrame(() => fn(...args));
 
@@ -25,17 +25,17 @@ const getOptionsFromDataset = (element, prefix) => (
 	(prefix = !!prefix ? prefix + '-' : ''),
 	Object.assign(
 		{},
-		...Array.from(Object.values(element.attributes), (attr) =>
+		...Array.from(Object.values(element.attributes), attr =>
 			attr.name.match('data-' + prefix)
 				? {
 						// key === attribute name after data-, and replace - & the following character with following character uppercase;
 						[attr.name
 							.split('data-' + prefix)[1]
-							.replace(/-./g, (x) => x.toUpperCase()[1])]:
+							.replace(/-./g, x => x.toUpperCase()[1])]:
 							attr.value,
 				  }
 				: false,
-		).filter((v) => v),
+		).filter(v => v),
 	)
 );
 
@@ -43,30 +43,30 @@ const fixRelOpener = () =>
 	requestAnimationFrame(() =>
 		document
 			.querySelectorAll('a[target=_blank]:not([rel*=noopener])')
-			.forEach((e) =>
+			.forEach(e =>
 				e.setAttribute('rel', e.getAttribute('rel') + ' noopener'),
 			),
 	);
 
 const rIC =
-	// @ts-expect-error
 	self.requestIdleCallback ||
 	((
 		/** @type {(callbackArguments: { didTimeout: boolean; timeRemaining: (e: undefined) => number; }) => any} */ callback,
+		// @ts-ignore
 		start = +new Date(),
 	) =>
 		setTimeout(
-			/** @param {undefined} l */ (l) =>
+			/** @param {undefined} l */ l =>
 				callback({
 					didTimeout: !1,
-					timeRemaining: /** @param {undefined} e */ (e) =>
+					timeRemaining: /** @param {undefined} e */ e =>
+						// @ts-ignore
 						Math.max(0, 50 - (+new Date() - start)),
 				}),
 			1,
 		));
 
 const cIC =
-	//@ts-expect-error
 	self.cancelIdleCallback || ((/** @type {number} */ e) => clearTimeout(e));
 
 /**

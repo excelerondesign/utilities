@@ -47,7 +47,7 @@ const handler = {
  * @param {object} enumObject
  * @returns {ProxyHandler<object, handler>}
  */
-const Enum = (enumObject) => new Proxy(enumObject, handler);
+const Enum = enumObject => new Proxy(enumObject, handler);
 
 /**
  * #### A storage solution aimed at replacing jQuerys data function.
@@ -159,8 +159,7 @@ function JSONRelaxer(text) {
 	 * @param {string} key
 	 * @returns {(text: string) => string}
 	 */
-	const runReplace = (key) => (text) =>
-		text.replace(regexs[key], replacers[key]);
+	const runReplace = key => text => text.replace(regexs[key], replacers[key]);
 
 	/** @type {string} */
 	// @ts-ignore

@@ -4,8 +4,4 @@ import * as elements from './elements.js';
 
 import * as utils from './utils.js';
 
-export {
-	data,
-	elements,
-	utils
-}
+export { data, elements, utils };

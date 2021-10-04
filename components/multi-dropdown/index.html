@@ -70,7 +70,7 @@
 					this.content = newContent;
 				},
 				mounted() {
-					this.fetchMarkdown().then((text) => {
+					this.fetchMarkdown().then(text => {
 						let content = marked(text);
 
 						this.updateContent(content);

@@ -14,13 +14,13 @@ const noop = () => {};
  * @param {any} obj
  * @returns {string}
  */
-const type = (obj) =>
+const type = obj =>
 	Object.prototype.toString.call(obj).slice(8, -1).toLowerCase();
 
 /**
  * @param {()=>void} fn
  */
-const createWorker = (fn) =>
+const createWorker = fn =>
 	new Worker(
 		URL.createObjectURL(
 			new Blob(['self.onmessage=' + fn.toString() + ';'], {
