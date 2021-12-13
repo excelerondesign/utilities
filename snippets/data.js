@@ -265,4 +265,27 @@ function convertBytes(bytes = 0, fixed = 1) {
 	};
 }
 
-export { optChain, qd, Enum, JSONRelaxer, randid, __Data, convertBytes };
+const deepAssign = (base,...merge) => {
+  let obj,
+      key,
+      i=0,
+      mLength=merge.length;
+  if(mLength>0)
+    for(;i<mLength;)
+      for(key in obj=merge[i++])
+        base[key]="O"==toString.call(obj[key])[8]
+          ? deepAssign(base[key]||{},obj[key])
+        : obj[key];
+  return base
+}
+
+export {
+	optChain,
+	qd,
+	Enum,
+	JSONRelaxer,
+	randid,
+	__Data,
+	convertBytes,
+	deepAssign
+};
